@@ -1,5 +1,5 @@
 
-# Event Management API
+# Event Registration System
 
 A RESTful Event Management System built using Django and Django REST Framework (DRF).
 The API allows users to create events, RSVP, and leave reviews.
