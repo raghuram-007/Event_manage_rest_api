@@ -1,129 +1,173 @@
+# 🎉 Event Registration System API (Django REST Framework)
 
-# Event Registration System
+[![Python](https://img.shields.io/badge/Python-3.11-blue?style=flat-square\&logo=python\&logoColor=white)](https://www.python.org/)
+[![Django](https://img.shields.io/badge/Django-4.2-green?style=flat-square\&logo=django\&logoColor=white)](https://www.djangoproject.com/)
+[![DRF](https://img.shields.io/badge/DRF-3.15-blue?style=flat-square\&logo=django\&logoColor=white)](https://www.django-rest-framework.org/)
+[![API](https://img.shields.io/badge/API-REST-red?style=flat-square)](https://www.django-rest-framework.org/)
+[![License](https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square)](https://opensource.org/licenses/MIT)
 
-A RESTful Event Management System built using Django and Django REST Framework (DRF).
-The API allows users to create events, RSVP, and leave reviews.
-It demonstrates use of serializers, viewsets, permissions, and JWT authentication.
+A simple and clean **Event Management System API** built using **Django** and **Django REST Framework (DRF)**.
+This project allows users to view events, register for events, and manage their registrations.
 
-# Features
-## 🧩 Core Functionality
+---
 
-User Profiles with extended fields (full name, bio, location, profile picture)
+## 📌 Features
 
-Events: Create, update, delete, and list events
+### ✅ Public Endpoints
 
-RSVPs: Mark attendance status for events (Going, Maybe, Not Going)
+* **List all events**
+* **View event details**
 
-Reviews: Add and view event reviews
+### 🔐 Authenticated Endpoints (Requires Login)
 
-## 🔐 Authentication & Permissions
+* **Register for an event**
+* **View my registrations**
+* **Delete my registration**
 
-JWT Authentication (via djangorestframework-simplejwt)
+---
 
-Only event organizers can edit or delete their events
+## 🛠️ Tech Stack
 
-Private events visible only to invited users (custom permission)
+* **Backend:** Django, Django REST Framework
+* **Authentication:** Django default auth system
+* **Database:** SQLite (default) or MySQL/PostgreSQL
 
-## 🧭 Extra Features (Optional)
+---
 
-Pagination for events and reviews
+## 📂 Project Structure (Important Files)
 
-Filtering and search by title, location, or organizer
+```
+📦 project
+├── events
+│   ├── models.py
+│   ├── serializers.py
+│   ├── views.py
+│   ├── urls.py
+│   └── admin.py
+├── project
+│   ├── settings.py
+│   ├── urls.py
+└── manage.py
+```
 
-Unit tests for endpoints## Author
+---
 
-👤 **Author:** Raghu Ram  
-🌐 **GitHub:** [raghuram-007](https://github.com/raghuram-007)  
+## 📌 API Endpoints
 
+### 📍 **Events**
 
+| Method | Endpoint        | Description              |
+| ------ | --------------- | ------------------------ |
+| GET    | `/events/`      | List all events          |
+| GET    | `/events/<id>/` | Get single event details |
 
-![Author](https://img.shields.io/badge/Author-Raghu%20Ram-blue?style=for-the-badge)
-![GitHub](https://img.shields.io/badge/GitHub-raghuram--007-black?style=for-the-badge&logo=github&logoColor=white)
-# 🗓️ Event Management API
+### 📍 **Event Registrations (Public View)**
 
-[![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python&logoColor=white)](https://www.python.org/)
-[![Django](https://img.shields.io/badge/Django-5.x-green?logo=django&logoColor=white)](https://www.djangoproject.com/)
-[![Django REST Framework](https://img.shields.io/badge/DRF-API-red?logo=django&logoColor=white)](https://www.django-rest-framework.org/)
-[![JWT](https://img.shields.io/badge/JWT-Authentication-yellow?logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
-[![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
-[![Postman](https://img.shields.io/badge/Tested%20With-Postman-orange?logo=postman&logoColor=white)](https://www.postman.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-lightgrey.svg)](https://opensource.org/licenses/MIT)
-# Tech Stack
+| Method | Endpoint                            | Description                            |
+| ------ | ----------------------------------- | -------------------------------------- |
+| GET    | `/events/<event_id>/registrations/` | List registrations of a specific event |
 
-| Component              | Technology                          |
-| ---------------------- | ----------------------------------- |
-| Backend Framework      | Django 5.x                          |
-| API Framework          | Django REST Framework               |
-| Authentication         | JWT (via SimpleJWT)                 |
-| Database               | SQLite (default) / MySQL (optional) |                      |
-| Testing                | Django TestCase / DRF APITestCase   |
+### 🔐 **User Registrations (Requires Login)**
 
-## ⚙️ Setup Instructions
-1️⃣ Clone the Repository
-git clone https://github.com/raghuram-007/Event-Management-API-raghuram.git
+| Method | Endpoint                     | Description            |
+| ------ | ---------------------------- | ---------------------- |
+| POST   | `/register/`                 | Register for an event  |
+| GET    | `/my-registrations/`         | View my registrations  |
+| DELETE | `/registration/<id>/delete/` | Delete my registration |
 
-cd EventManagementAPI
+---
 
-## 2️⃣ Create & Activate Virtual Environment
-python -m venv venv
+## 🧪 Example Registration Payload (POST `/register/`)
 
-venv\Scripts\activate          # For Windows
+```json
+{
+  "event": 1,
+  "name": "John Doe",
+  "email": "john@example.com",
+  "phone": "9876543210"
+}
+```
 
-## 3️⃣ Install Dependencies
+---
+
+## 🧱 Models Overview
+
+### **Event**
+
+* title
+* description
+* date
+* location
+
+### **Registration**
+
+* event (FK)
+* user (FK)
+* name
+* email
+* phone
+* registered_at
+
+---
+
+## 🔧 How to Run the Project
+
+```bash
+# Install dependencies
 pip install -r requirements.txt
 
-
-# 🧱 Database Setup
-
-python manage.py makemigrations
-
+# Apply migrations
 python manage.py migrate
 
+# Create superuser
 python manage.py createsuperuser
 
-# ▶️ Run the Server
+# Start server
 python manage.py runserver
+```
 
+---
 
-The server will start at http://127.0.0.1:8000/
-# 🧩 API Endpoints
+## 🔑 Authentication (Required for some APIs)
 
-## 🔸 Event API
+Use:
 
-| Method | Endpoint            | Description                   | Auth Required |
-| ------ | ------------------- | ----------------------------- | ------------- |
-| POST   | `/api/events/`      | Create a new event            | ✅ Yes         |
-| GET    | `/api/events/`      | List all public events        | ❌ No          |
-| GET    | `/api/events/{id}/` | Get event details             | ❌ No          |
-| PUT    | `/api/events/{id}/` | Update event (organizer only) | ✅ Yes         |
-| DELETE | `/api/events/{id}/` | Delete event (organizer only) | ✅ Yes         |
+* `/admin` login to create users
+* Obtain token using session login or JWT (if configured)
 
-## 🔸 RSVP API
+---
 
-| Method | Endpoint                                 | Description        | Auth Required |
-| ------ | ---------------------------------------- | ------------------ | ------------- |
-| POST   | `/api/events/{event_id}/rsvp/`           | RSVP to an event   | ✅ Yes         |
-| PATCH  | `/api/events/{event_id}/rsvp/{user_id}/` | Update RSVP status | ✅ Yes         |
+## 📬 Admin Panel
 
-## 🔸 Review API
+Access all events and registrations at:
 
-| Method | Endpoint                          | Description                | Auth Required |
-| ------ | --------------------------------- | -------------------------- | ------------- |
-| POST   | `/api/events/{event_id}/reviews/` | Add review to event        | ✅ Yes         |
-| GET    | `/api/events/{event_id}/reviews/` | List all reviews for event | ❌ No          |
+```
+http://localhost:8000/admin/
+```
 
-# 🔑 JWT Authentication
+---
 
-Use the following endpoints for JWT authentication:
+## 📘 Serializer Overview
 
-| Endpoint              | Description                      |
-| --------------------- | -------------------------------- |
-| `/api/token/`         | Obtain access and refresh tokens |
-| `/api/token/refresh/` | Refresh access token             |
+### EventSerializers
 
-# 🧪 Running Tests
+* returns all event fields
 
-python manage.py test
+### RegisterSerializers
 
-## Runserver
-python manage.py runserver
+* user (read-only)
+* event (PK field)
+* event_title (read-only)
+
+---
+
+## ✔️ Notes
+
+* `registered_at` is auto-generated
+* Users must be authenticated to register or delete a registration
+
+---
+
+## ⭐ Author
+
+**Raghu Ram** – Event Management API using Django & DRF
